@@ -46,7 +46,8 @@ def db_create():
 @app.route("/db_insert")
 def db_insert():
     try:
-        conn = psycopg2.connect("postgresql://emthedm_lab10db_user:YfR3U6na5R67hlYC4Vdmf40iYGbCHrAC@dpg-d47mupi4d50c7389sdc0-a/emthedm_lab10db")
+        conn = psycopg2.connect(
+            "postgresql://emthedm_lab10db_user:YfR3U6na5R67hlYC4Vdmf40iYGbCHrAC@dpg-d47mupi4d50c7389sdc0-a/emthedm_lab10db")
         cur = conn.cursor()
 
         cur.execute('''
@@ -64,3 +65,17 @@ def db_insert():
         return "Basketball table populated successfully!"
     except Exception as e:
         return f"Error inserting data: {e}"
+
+
+@app.route("/db_debug")
+def db_debug():
+    try:
+        conn = psycopg2.connect(
+            "postgresql://emthedm_lab10db_user:YfR3U6na5R67hlYC4Vdmf40iYGbCHrAC@dpg-d47mupi4d50c7389sdc0-a/emthedm_lab10db")
+        cur = conn.cursor()
+        cur.execute("SELECT table_name FROM information_schema.tables WHERE table_schema='public';")
+        tables = cur.fetchall()
+        conn.close()
+        return str(tables)
+    except Exception as e:
+        return f"Error: {e}"
