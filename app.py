@@ -91,3 +91,17 @@ def db_select():
 
     except Exception as e:
         return f"Error selecting data: {e}"
+
+
+@app.route("/db_drop")
+def db_drop():
+    try:
+        conn = psycopg2.connect(
+            "postgresql://emthedm_lab10db_user:YfR3U6na5R67hlYC4Vdmf40iYGbCHrAC@dpg-d47mupi4d50c7389sdc0-a/emthedm_lab10db")
+        cur = conn.cursor()
+        cur.execute('DROP TABLE IF EXISTS Basketball;')
+        conn.commit()
+        conn.close()
+        return "Basketball table dropped successfully!"
+    except Exception as e:
+        return f"Error dropping table: {e}"
