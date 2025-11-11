@@ -66,15 +66,28 @@ def db_insert():
         return f"Error inserting data: {e}"
 
 
-@app.route("/db_debug")
-def db_debug():
+@app.route("/db_select")
+def db_select():
     try:
         conn = psycopg2.connect(
             "postgresql://emthedm_lab10db_user:YfR3U6na5R67hlYC4Vdmf40iYGbCHrAC@dpg-d47mupi4d50c7389sdc0-a/emthedm_lab10db")
         cur = conn.cursor()
-        cur.execute("SELECT table_name FROM information_schema.tables WHERE table_schema='public';")
-        tables = cur.fetchall()
+        cur.execute('SELECT * FROM Basketball;')
+        records = cur.fetchall()
         conn.close()
-        return str(tables)
+
+        response = "<h2>Basketball Table Data</h2>"
+        response += "<table border='1' style='border-collapse: collapse; padding: 8px;'>"
+        response += "<tr><th>First</th><th>Last</th><th>City</th><th>Name</th><th>Number</th></tr>"
+
+        for row in records:
+            response += "<tr>"
+            for cell in row:
+                response += f"<td style='padding: 6px 12px;'>{cell}</td>"
+            response += "</tr>"
+
+        response += "</table>"
+        return response
+
     except Exception as e:
-        return f"Error: {e}"
+        return f"Error selecting data: {e}"
