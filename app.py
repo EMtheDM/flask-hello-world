@@ -43,11 +43,10 @@ def db_create():
         return f"Error creating table: {e}"
 
 
-@app.route('/db_insert')
+@app.route("/db_insert")
 def db_insert():
     try:
-        conn = psycopg2.connect(
-            "postgresql://emthedm_lab10db_user:YfR3U6na5R67hlYC4Vdmf40iYGbCHrAC@dpg-d47mupi4d50c7389sdc0-a/emthedm_lab10db")
+        conn = psycopg2.connect("postgresql://emthedm_lab10db_user:YfR3U6na5R67hlYC4Vdmf40iYGbCHrAC@dpg-d47mupi4d50c7389sdc0-a/emthedm_lab10db")
         cur = conn.cursor()
 
         cur.execute('''
